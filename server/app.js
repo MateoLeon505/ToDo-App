@@ -11,16 +11,16 @@ import {
   sharedTodo,
 } from "./database.js";
 import cors from "cors";
-
+  // origin: "https://127.0.0.1:5173",127.0.0.1
 const corsOptions = {
-  origin: "https://127.0.0.1:5173",
+  origin: "*",
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 };
 
 const app = express();
 app.use(express.json());
-app.use(cors(corsOptions));
+app.use(cors());
 
 //REQUESTS
 app.get("/todos/:id", async (req, res) => {
@@ -64,6 +64,6 @@ app.post("/todos", async (req, res) => {
   res.status(201).send(newTodo);
 });
 
-app.listen(8000, () => {
-  console.log("Server listening on port 8000");
+app.listen(8080, () => {
+  console.log("Server listening on port 8080");
 });
