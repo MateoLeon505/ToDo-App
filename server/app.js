@@ -11,16 +11,16 @@ import {
   sharedTodo,
 } from "./database.js";
 import cors from "cors";
-  // origin: "https://127.0.0.1:5173",127.0.0.1
+ 
 const corsOptions = {
-  origin: "*",
+  origin: ["https://192.168.20.24:8081"],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 };
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
 
 //REQUESTS
 app.get("/todos/:id", async (req, res) => {

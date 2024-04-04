@@ -11,7 +11,8 @@ const App = () => {
 
   const fetchData = async () => {
     try {
-      let response = await fetch("http://127.0.0.1:8080/todos/1");
+      //http://localhost:8080/todos/1
+      let response = await fetch("http://localhost:8080/todos/1");
       const data = await response.json();
       setTodos(data);
 
@@ -20,10 +21,11 @@ const App = () => {
     }
   };
 
+  console.log(todos);
   return (
     <View style={styles.container}>
       <Text>Hello World!</Text>
-      <Text>{todos}</Text>
+      {/* <Text>{todos}</Text> */}
       <StatusBar style="auto" />
     </View>
   );
