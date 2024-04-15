@@ -11,8 +11,7 @@ const App = () => {
 
   const fetchData = async () => {
     try {
-      //http://localhost:8080/todos/1
-      let response = await fetch("http://localhost:8080/todos/1");
+      let response = await fetch("http://localhost:8080/todos/2");
       const data = await response.json();
       setTodos(data);
 
