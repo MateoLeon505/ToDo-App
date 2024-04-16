@@ -11,10 +11,10 @@ import {
   sharedTodo,
 } from "./database.js";
 import cors from "cors";
- 
+
 const corsOptions = {
-  origin: ["https://192.168.20.24:8081"],
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  origin: "http://127.0.0.1:5173",
+  methods: ["POST", "GET"],
   credentials: true,
 };
 

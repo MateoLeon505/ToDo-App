@@ -11,10 +11,10 @@ const App = () => {
 
   const fetchData = async () => {
     try {
-      let response = await fetch("http://localhost:8080/todos/2");
+      let response = await fetch("http://192.168.20.24:8080/todos/1");
       const data = await response.json();
       setTodos(data);
-
+      console.log(todos);
     } catch (error) {
       console.error(error);
     }
@@ -23,7 +23,10 @@ const App = () => {
   console.log(todos);
   return (
     <View style={styles.container}>
-      <Text>Hello World!</Text>
+      <Text>{JSON.stringify(todos)}</Text>
+      {/* {todos?.map((todo) => {
+        <Text style={styles.text}>ID:{todo.id}</Text>
+      })} */}
       {/* <Text>{todos}</Text> */}
       <StatusBar style="auto" />
     </View>
@@ -39,4 +42,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  text : {
+    color: "#000000",
+  }
 });
