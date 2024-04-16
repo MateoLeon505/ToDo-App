@@ -24,44 +24,77 @@ app.use(cors(corsOptions));
 
 //REQUESTS
 app.get("/todos/:id", async (req, res) => {
-  const todos = await getTodosById(req.params.id);
-  res.status(200).send(todos);
+  const todoId = req.params.id;
+  try {
+    const todos = await getTodosById(todoId);
+    res.status(200).send(todos);
+  } catch (error) {
+    res.status(400).send(`Error al obtener tareas: ${error.message}`);
+  }
 });
 
 app.get("/todos/shared_todos/:id", async (req, res) => {
-  const todo = await getSharedToDoById(req.params.id);
-  const author = await getTodo(todo.user_id);
-  const shared_with = await getUserById(todo.shared_with_id);
-  res.status(200).send({ author, shared_with });
+  const todoId = req.params.id;
+  try {
+    const todo = await getSharedToDoById(todoId);
+    const author = await getTodo(todo.user_id);
+    const shared_with = await getUserById(todo.shared_with_id);
+    res.status(200).send({ author, shared_with });
+  } catch (error) {
+    res.status(400).send(`Error al obtener tareas: ${error.message}`);
+  }
 });
 
 app.get("/users/:id", async (req, res) => {
-  const user = await getUserById(req.params.id);
-  res.status(200).send(user);
+  const userId = req.params.id;
+  try {
+    const user = await getUserById(userId);
+    res.status(200).send(user);
+  } catch (error) {
+    res.status(400).send(`Error al obtener usuario: ${error.message}`);
+  }
 });
 
 app.put("/todos/:id", async (req, res) => {
+  const todoId = req.params.id;
   const { value } = req.body;
-  const todo = await toggleCompleted(req.params.id, value);
-  res.status(200).send(todo);
+  try {
+    const todo = await toggleCompleted(todoId, value);
+    res.status(200).send(todo);
+  } catch (error) {
+    res.status(400).send(`Error al actualizar tarea: ${error.message}`);
+  }
 });
 
 app.delete("/todos/:id", async (req, res) => {
-  await deleteTodo(req.params.id);
-  res.send({ message: "ToDo deleted successfully" });
+  const toDoToDelete = req.params.id;
+  try {
+    await deleteTodo(toDoToDelete);
+    res.send({ message: "ToDo deleted successfully" });
+  } catch (error) {
+    res.status(400).send(`Error al eliminar tarea: ${error.message}`);
+  }
 });
 
 app.post("/todos/shared_todos", async (req, res) => {
   const { todo_id, user_id, email } = req.body;
-  const userToShare = await getUserByEmail(email);
-  const shared_todo = await sharedTodo(todo_id, user_id, userToShare.id);
-  res.status(201).send(shared_todo);
+  try {
+    const userToShare = await getUserByEmail(email);
+    const shared_todo = await sharedTodo(todo_id, user_id, userToShare.id);
+    res.status(201).send(shared_todo);
+  } catch (error) {
+    res.status(400).send(`Error al compartir tarea: ${error.message}`);
+  }
 });
 
 app.post("/todos", async (req, res) => {
   const { user_id, title } = req.body;
-  const newTodo = await createTodo(user_id, title);
-  res.status(201).send(newTodo);
+  try {
+    const newTodo = await createTodo(user_id, title);
+    res.status(201).send(newTodo);
+  } catch (error) {
+    res.status(400).send(`Error al crear nueva tarea: ${error.message}`);
+  }
 });
 
 app.listen(8080, () => {
