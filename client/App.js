@@ -1,6 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 import { useState, useEffect } from "react";
 import { FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import Task from "./components/task";
 
 const App = () => {
@@ -35,20 +37,26 @@ const App = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <SafeAreaView>
-        <FlatList
-          data={todos}
-          keyExtractor={(todo) => todo.id}
-          renderItem={({ item }) => (
-            <Task {...item} clearTodo={clearTodo} toggleTodo={toggleTodo} />
-          )}
-          ListHeaderComponent={() => <Text style={styles.title}>Today</Text>}
-          contentContainerStyle={styles.contentContainerStyle}
-        />
-      </SafeAreaView>
-      <StatusBar style="auto" />
-    </View>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <BottomSheetModalProvider>
+        <View style={styles.container}>
+          <SafeAreaView>
+            <FlatList
+              data={todos}
+              keyExtractor={(todo) => todo.id}
+              renderItem={({ item }) => (
+                <Task {...item} clearTodo={clearTodo} toggleTodo={toggleTodo} />
+              )}
+              ListHeaderComponent={() => (
+                <Text style={styles.title}>Today</Text>
+              )}
+              contentContainerStyle={styles.contentContainerStyle}
+            />
+          </SafeAreaView>
+          <StatusBar style="auto" />
+        </View>
+      </BottomSheetModalProvider>
+    </GestureHandlerRootView>
   );
 };
 

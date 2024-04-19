@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import {
   View,
   Text,
@@ -7,6 +7,8 @@ import {
   Pressable,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import ShareTodoModal from "./shareTodoModal";
 
 const CheckMark = ({ id, completed, toggleTodo }) => {
   const toggle = async () => {
@@ -41,6 +43,18 @@ const Task = ({
   toggleTodo,
 }) => {
   const [isDeleteActive, setIsDeleteActive] = useState(false);
+  const bottomSheetModalRef = useRef < BottomSheetModal > null;
+  const sharedBottomSheetRef = useRef(null);
+  const snapPoints = ["25%", "48%", "75%"];
+  const snapPointsShared = ["40%"];
+
+  const handlePresentModal = () => {
+    bottomSheetModalRef.current?.present();
+  };
+
+  const handlePresentShared = () => {
+    sharedBottomSheetRef.current?.present();
+  };
 
   const deleteTodo = async () => {
     console.log("Elimonar tarea");
@@ -52,10 +66,6 @@ const Task = ({
     });
     // clearTodo(id);
     console.log(response.status);
-  };
-
-  const handlePresetShared = () => {
-    console.log("HOLA");
   };
 
   return (
@@ -71,14 +81,14 @@ const Task = ({
       </View>
       {shared_with_id !== null ? (
         <Feather
-          onPress={handlePresetShared}
+          onPress={handlePresentShared}
           name="users"
           size={20}
           color="#383839"
         />
       ) : (
         <Feather
-          onPress={handlePresetShared}
+          onPress={handlePresentModal}
           name="share"
           size={20}
           color="#383839"
@@ -89,9 +99,23 @@ const Task = ({
           <Text style={{ color: "#fff", fontWeight: "bold" }}>x</Text>
         </Pressable>
       )}
+      <BottomSheetModal
+        ref={sharedBottomSheetRef}
+        snapPoints={snapPointsShared}
+        backgroundStyle={{ borderRadius: 50, borderWidth: 4 }}
+        style={{ paddingTop: 5, paddingHorizontal: 20 }}
+      >
+        <ShareTodoModal
+          id={id}
+          title={title}
+          shared_with_id={shared_with_id}
+          completed={completed}
+        />
+      </BottomSheetModal>
     </TouchableOpacity>
   );
 };
+
 export default Task;
 
 const styles = StyleSheet.create({
