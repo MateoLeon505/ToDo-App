@@ -5,7 +5,7 @@ import { TextInput } from "react-native-gesture-handler";
 const TodoModal = ({ id, title }) => {
   return (
     <View>
-      <Text>TodoModal</Text>
+      {/* <Text>{title}</Text> */}
     </View>
   );
 };
