@@ -20,7 +20,6 @@ const App = () => {
     }
   };
 
-  console.log(todos);
   return (
     <View style={styles.container}>
       <SafeAreaView>
