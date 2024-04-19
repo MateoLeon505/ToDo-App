@@ -19,11 +19,26 @@ const CheckMark = ({ id, completed, toggleTodo }) => {
   );
 };
 
-const Task = ({ id, title, shared_with_id, completed }) => {
+const Task = ({
+  id,
+  title,
+  shared_with_id,
+  completed,
+  clearTodo,
+  toggleTodo,
+}) => {
   const [isDeleteActive, setIsDeleteActive] = useState(false);
 
-  const deleteTodo = () => {
+  const deleteTodo = async () => {
     console.log("Elimonar tarea");
+    const response = await fetch(`http://192.168.20.24:8080/todos/${id}`, {
+      headers: {
+        "x-api-key": "123asd",
+      },
+      method: "DELETE",
+    });
+    // clearTodo(id);
+    console.log(response.status);
   };
 
   const handlePresetShared = () => {
@@ -31,7 +46,12 @@ const Task = ({ id, title, shared_with_id, completed }) => {
   };
 
   return (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onLongPress={() => setIsDeleteActive(true)}
+      onPress={() => setIsDeleteActive(false)}
+      activeOpacity={0.8}
+      style={[styles.container]}
+    >
       <View style={styles.containerTextCheckBox}>
         <CheckMark />
         <Text style={styles.text}>{title}</Text>
@@ -69,7 +89,7 @@ const styles = StyleSheet.create({
     padding: 14,
     borderRadius: 21,
     marginBottom: 10,
-    backgroundColor: "white",
+    backgroundColor: "#ffffff",
   },
   containerTextCheckBox: {
     flex: 1,
