@@ -20,14 +20,30 @@ const App = () => {
     }
   };
 
+  const clearTodo = (id) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
+
+  const toggleTodo = (id) => {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id
+          ? { ...todo, completed: todo.completed === 1 ? 0 : 1 }
+          : todo
+      )
+    );
+  };
+
   return (
     <View style={styles.container}>
       <SafeAreaView>
         <FlatList
           data={todos}
           keyExtractor={(todo) => todo.id}
-          renderItem={({ item }) => <Task {...item} />}
-          ListHeaderComponent={() => <Text style={styles.title}>Tasks</Text>}
+          renderItem={({ item }) => (
+            <Task {...item} clearTodo={clearTodo} toggleTodo={toggleTodo} />
+          )}
+          ListHeaderComponent={() => <Text style={styles.title}>Today</Text>}
           contentContainerStyle={styles.contentContainerStyle}
         />
       </SafeAreaView>

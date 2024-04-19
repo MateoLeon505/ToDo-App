@@ -9,8 +9,21 @@ import {
 import { Feather } from "@expo/vector-icons";
 
 const CheckMark = ({ id, completed, toggleTodo }) => {
+  const toggle = async () => {
+    const response = await fetch(`http://192.168.20.24:8080/todos/${id}`, {
+      method: "PUT",
+      body: JSON.stringify({
+        value: completed ? false : true,
+      }),
+    });
+    const data = await response.json();
+    toggleTodo(id);
+    console.log(data);
+  };
+
   return (
     <Pressable
+      onPress={toggle}
       style={[
         styles.checkMark,
         { backgroundColor: completed === 0 ? "#E9E9EF" : "#0EA5E9" },
@@ -53,7 +66,7 @@ const Task = ({
       style={[styles.container]}
     >
       <View style={styles.containerTextCheckBox}>
-        <CheckMark />
+        <CheckMark id={id} completed={completed} toggleTodo={toggleTodo} />
         <Text style={styles.text}>{title}</Text>
       </View>
       {shared_with_id !== null ? (
