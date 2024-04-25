@@ -113,14 +113,14 @@ const Task = ({
           completed={completed}
         />
       </BottomSheetModal>
-      {/* <BottomSheetModal
+      <BottomSheetModal
         ref={bottomSheetModalRef}
         snapPoints={snapPointsShared}
         backgroundStyle={{ borderRadius: 50, borderWidth: 4 }}
         style={{ paddingTop: 5, paddingHorizontal: 20 }}
       >
         <TodoModal id={id} title={title} />
-      </BottomSheetModal> */}
+      </BottomSheetModal>
     </TouchableOpacity>
   );
 };
