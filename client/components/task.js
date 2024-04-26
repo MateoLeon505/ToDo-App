@@ -46,7 +46,7 @@ const Task = ({
   const [isDeleteActive, setIsDeleteActive] = useState(false);
   const bottomSheetModalRef = useRef(null);
   const sharedBottomSheetRef = useRef(null);
-  const snapPoints = ["25%", "48%", "75%"];
+  const snapPoints = ["25%", "45%", "75%"];
   const snapPointsShared = ["40%"];
 
   const handlePresentModal = () => {
@@ -60,9 +60,6 @@ const Task = ({
   const deleteTodo = async () => {
     console.log("Elimonar tarea");
     const response = await fetch(`http://192.168.20.24:8080/todos/${id}`, {
-      headers: {
-        "x-api-key": "123asd",
-      },
       method: "DELETE",
     });
     // clearTodo(id);
@@ -115,7 +112,8 @@ const Task = ({
       </BottomSheetModal>
       <BottomSheetModal
         ref={bottomSheetModalRef}
-        snapPoints={snapPointsShared}
+        index={2}
+        snapPoints={snapPoints}
         backgroundStyle={{ borderRadius: 50, borderWidth: 4 }}
         style={{ paddingTop: 5, paddingHorizontal: 20 }}
       >
